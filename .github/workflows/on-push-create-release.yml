@@ -1,0 +1,35 @@
+name: Create new release
+on:
+  workflow_call:
+    secrets:
+      STORM_BOT_GITHUB_TOKEN:
+        required: false
+
+jobs:
+  CreateRelease:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
+          tag_prefix: "v"
+          dry_run: true
+          default_bump: false
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        if: steps.tag_version.outputs.release_type
+        with:
+          repo_token: "${{ secrets.STORM_BOT_GITHUB_TOKEN }}"
+          automatic_release_tag: ${{ steps.tag_version.outputs.new_tag }}
+          prerelease: false
+          files: |
+            LICENSE.md
+            *.tar.gz
+            *.whl

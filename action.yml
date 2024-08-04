@@ -1,0 +1,39 @@
+# Note: This is a composite GitHub Actions, it should do all env setup, caching an so on, so other pipelines can just compose their own stuff on top of that.
+# Docs: https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+
+name: "Storm Software - Telegram Channel Notification"
+description: "A composite GitHub action used to write a notification message to a Storm Telegram channel/group."
+author: "sullivanpj"
+
+branding:
+  icon: "package"
+  color: "gray-dark"
+
+inputs:
+  token:
+    description: "The Storm Notifications Bot's Telegram token"
+    required: false
+  chat:
+    description: 'The target to which the message will be sent - can be a Telegram Channel or Group. Please note: the "-100" prefix is added by the action.'
+    required: false
+  status:
+    description: 'The status of the job that triggered the action'
+    required: true
+    default: 'In Progress'
+
+runs:
+  using: "node12"
+  main: "dist/index.js"
+
+
+# inputs:
+#   stormBot:
+#     description: The github username of the Storm bot
+#     required: true
+#     default: Stormie-Bot
+#   stormBotGitHubToken:
+#     description: The github token of the Storm bot
+#     required: true
+
+
+
