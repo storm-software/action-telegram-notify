@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.STORM_BOT_GITHUB_TOKEN }}
 
       - name: Get dotenvx
-      - run: curl -sfS https://dotenvx.sh/install.sh | sh
+        run: curl -sfS https://dotenvx.sh/install.sh | sh
 
       - name: Check pnpm version
         shell: bash
