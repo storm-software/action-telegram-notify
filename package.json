@@ -36,7 +36,7 @@
   ],
   "scripts": {
     "build": "dotenvx run -- ncc build ./src/index.ts",
-    "postbuild": "pnpm copyfiles --up=2 src/templates/* dist/templates",
+    "postbuild": "pnpm copyfiles ./README.md ./LICENSE dist",
     "prebuild": "pnpm rimraf dist"
   },
   "dependencies": {
