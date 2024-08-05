@@ -97,7 +97,7 @@ async function sendMessage(token: string, chatId: string, status?: string) {
   const repoUrl = `https://github.com/${repoFullName}`;
 
   let template;
-  switch (status?.toLowerCase()) {
+  switch (status?.toLowerCase()?.trim?.()?.replace(/\s+/g, "-")) {
     case "success":
       template = Handlebars.compile(
         await fs.readFile("./templates/success.hbs", "utf8")

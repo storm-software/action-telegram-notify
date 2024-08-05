@@ -37687,10 +37687,11 @@ const HTTP_CLIENT = new http.HttpClient();
  */
 function sendMessage(token, chatId, status) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a, _b, _c;
         const repoFullName = `${github.context.repo.owner}/${github.context.repo.repo}`;
         const repoUrl = `https://github.com/${repoFullName}`;
         let template;
-        switch (status === null || status === void 0 ? void 0 : status.toLowerCase()) {
+        switch ((_c = (_b = (_a = status === null || status === void 0 ? void 0 : status.toLowerCase()) === null || _a === void 0 ? void 0 : _a.trim) === null || _b === void 0 ? void 0 : _b.call(_a)) === null || _c === void 0 ? void 0 : _c.replace(/\s+/g, "-")) {
             case "success":
                 template = Handlebars.compile(yield fs.readFile("./templates/success.hbs", "utf8"));
                 break;
