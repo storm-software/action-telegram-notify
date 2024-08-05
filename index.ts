@@ -1,4 +1,4 @@
-import core from "@actions/core";
+import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as http from "@actions/http-client";
 import { readFile } from "fs/promises";
