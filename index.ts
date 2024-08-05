@@ -1,4 +1,4 @@
-import * as core from "@actions/core";
+import { getInput, setFailed, setOutput } from "@actions/core";
 import * as github from "@actions/github";
 import * as http from "@actions/http-client";
 import { readFile } from "fs/promises";
@@ -9,17 +9,17 @@ const HTTP_CLIENT = new http.HttpClient();
 
 (async () => {
   try {
-    let chatId = core.getInput("chat") || process.env.TELEGRAM_CHAT;
-    let token = core.getInput("token") || process.env.TELEGRAM_TOKEN;
+    let chatId = getInput("chat") || process.env.TELEGRAM_CHAT;
+    let token = getInput("token") || process.env.TELEGRAM_TOKEN;
 
     if (!chatId) {
-      core.setFailed(
+      setFailed(
         "Please add the `TELEGRAM_CHAT` env variable or include the `chat` input parameter when calling this action"
       );
       process.exit(1);
     }
     if (!token) {
-      core.setFailed(
+      setFailed(
         "Please add the `TELEGRAM_TOKEN` env variable or include the `token` input parameter when calling this action"
       );
       process.exit(1);
@@ -71,18 +71,18 @@ const HTTP_CLIENT = new http.HttpClient();
 
     console.log("Telegrams response:", response);
     if (response.message.statusCode != 200) {
-      core.setFailed(`Telegram FAILED: ${JSON.stringify(response.message)}`);
+      setFailed(`Telegram FAILED: ${JSON.stringify(response.message)}`);
     } else {
-      core.setOutput("Telegrams SUCCESS", response);
+      setOutput("Telegrams SUCCESS", response);
     }
 
     return response;
   } catch (error) {
-    core.setFailed(error as Error);
+    setFailed(error as Error);
   }
 })().catch(err => {
   console.error(err);
-  core.setFailed(err);
+  setFailed(err);
 });
 
 /**
