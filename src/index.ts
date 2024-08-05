@@ -1,7 +1,7 @@
-import { getInput, setFailed, setOutput } from "@actions/core";
+import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as http from "@actions/http-client";
-import { readFile } from "fs/promises";
+import * as fs from "fs/promises";
 import * as Handlebars from "handlebars";
 import { encode } from "querystring";
 
@@ -9,17 +9,17 @@ const HTTP_CLIENT = new http.HttpClient();
 
 (async () => {
   try {
-    let chatId = getInput("chat") || process.env.TELEGRAM_CHAT;
-    let token = getInput("token") || process.env.TELEGRAM_TOKEN;
+    let chatId = core.getInput("chat") || process.env.TELEGRAM_CHAT;
+    let token = core.getInput("token") || process.env.TELEGRAM_TOKEN;
 
     if (!chatId) {
-      setFailed(
+      core.setFailed(
         "Please add the `TELEGRAM_CHAT` env variable or include the `chat` input parameter when calling this action"
       );
       process.exit(1);
     }
     if (!token) {
-      setFailed(
+      core.setFailed(
         "Please add the `TELEGRAM_TOKEN` env variable or include the `token` input parameter when calling this action"
       );
       process.exit(1);
@@ -71,18 +71,18 @@ const HTTP_CLIENT = new http.HttpClient();
 
     console.log("Telegrams response:", response);
     if (response.message.statusCode != 200) {
-      setFailed(`Telegram FAILED: ${JSON.stringify(response.message)}`);
+      core.setFailed(`Telegram FAILED: ${JSON.stringify(response.message)}`);
     } else {
-      setOutput("Telegrams SUCCESS", response);
+      core.setOutput("Telegrams SUCCESS", response);
     }
 
     return response;
   } catch (error) {
-    setFailed(error as Error);
+    core.setFailed(error as Error);
   }
 })().catch(err => {
   console.error(err);
-  setFailed(err);
+  core.setFailed(err);
 });
 
 /**
@@ -100,22 +100,22 @@ async function sendMessage(token: string, chatId: string, status?: string) {
   switch (status?.toLowerCase()) {
     case "success":
       template = Handlebars.compile(
-        await readFile("./templates/success.hbs", "utf8")
+        await fs.readFile("./templates/success.hbs", "utf8")
       );
       break;
     case "failed":
       template = Handlebars.compile(
-        await readFile("./templates/failed.hbs", "utf8")
+        await fs.readFile("./templates/failed.hbs", "utf8")
       );
       break;
     case "cancelled":
       template = Handlebars.compile(
-        await readFile("./templates/cancelled.hbs", "utf8")
+        await fs.readFile("./templates/cancelled.hbs", "utf8")
       );
       break;
     default:
       template = Handlebars.compile(
-        await readFile("./templates/in-progress.hbs", "utf8")
+        await fs.readFile("./templates/in-progress.hbs", "utf8")
       );
       break;
   }
