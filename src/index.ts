@@ -1,14 +1,12 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import * as http from "@actions/http-client";
+import axios from "axios";
 import * as Handlebars from "handlebars";
 import { encode } from "querystring";
 import cancelledTemplate from "./templates/cancelled";
 import failedTemplate from "./templates/failed";
 import inprogressTemplate from "./templates/in-progress";
 import successTemplate from "./templates/success";
-
-const HTTP_CLIENT = new http.HttpClient();
 
 (async () => {
   try {
@@ -73,8 +71,8 @@ const HTTP_CLIENT = new http.HttpClient();
     const response = await sendMessage(token, chatId, "success");
 
     console.log("Telegrams response:", response);
-    if (response.message.statusCode != 200) {
-      core.setFailed(`Telegram FAILED: ${JSON.stringify(response.message)}`);
+    if (response.status != 200) {
+      core.setFailed(`Telegram FAILED: ${JSON.stringify(response.data)}`);
     } else {
       core.setOutput("Telegrams SUCCESS", response);
     }
@@ -118,8 +116,9 @@ async function sendMessage(token: string, chatId: string, status?: string) {
   // console.log("Message to send to Telegram:", message);
   console.log(`Sending message to chat: -100${chatId}`);
 
-  return await HTTP_CLIENT.post(
-    `https://api.telegram.org/bot${token}/sendMessage?chat_id=-100${chatId}&text=${encodeURI(
+  return await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
+    chat_id: `-100${chatId}`,
+    text: encodeURI(
       template({
         ...github.context,
         repoUrl,
@@ -127,9 +126,10 @@ async function sendMessage(token: string, chatId: string, status?: string) {
         checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`,
         timestamp: new Date().toISOString()
       })
-    )}&parse_mode=MarkdownV2&reply_parameters=${encode({
+    ),
+    parse_mode: "MarkdownV2",
+    reply_parameters: encode({
       quote: github.context.runId
-    })}`,
-    JSON.stringify({})
-  );
+    })
+  });
 }

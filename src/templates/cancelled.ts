@@ -1,6 +1,4 @@
-export default `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) was cancelled before it could complete - {{ runId }}*
-
-**> View the full workflow details
+export default `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) was cancelled before it could complete*
 
 - Run ID: {{ runId }}
 - Run Number: #{{ runNumber }}

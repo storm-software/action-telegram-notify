@@ -1,6 +1,4 @@
-export default `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has completed successfully - {{ runId }}*
-
-**> View the full workflow details
+export default `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has completed successfully*
 
 - Run ID: {{ runId }}
 - Run Number: #{{ runNumber }}
