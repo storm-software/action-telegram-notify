@@ -99,22 +99,22 @@ async function sendMessage(token: string, chatId: string, status?: string) {
   let template;
   switch (status?.toLowerCase()?.trim?.()?.replace(/\s+/g, "-")) {
     case "success":
-      template = Handlebars.compile(
+      template = Handlebars.precompile(
         await fs.readFile("../templates/success.hbs", "utf8")
       );
       break;
     case "failed":
-      template = Handlebars.compile(
+      template = Handlebars.precompile(
         await fs.readFile("../templates/failed.hbs", "utf8")
       );
       break;
     case "cancelled":
-      template = Handlebars.compile(
+      template = Handlebars.precompile(
         await fs.readFile("../templates/cancelled.hbs", "utf8")
       );
       break;
     default:
-      template = Handlebars.compile(
+      template = Handlebars.precompile(
         await fs.readFile("../templates/in-progress.hbs", "utf8")
       );
       break;
