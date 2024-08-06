@@ -1,5 +1,4 @@
-
-*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has started - {{ runId }}*
+export default `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has started - {{ runId }}*
 
 **> View the full workflow details
 
@@ -13,4 +12,5 @@
 - Current SHA: {{ sha }}
 - Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
 
-*[Click here to see the full workflow details](https://github.com/${{ repoFullName }}/actions/runs/${{ runId }})*
+*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+`;

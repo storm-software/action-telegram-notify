@@ -1,11 +1,10 @@
-
-*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has completed successfully - {{ runId }}*
+export default `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) was cancelled before it could complete - {{ runId }}*
 
 **> View the full workflow details
 
 - Run ID: {{ runId }}
 - Run Number: #{{ runNumber }}
-- Workflow Status: Success
+- Workflow Status: Cancelled
 - Workflow Event: {{ eventName }}
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 - Job: {{ job }}
@@ -13,4 +12,5 @@
 - Current SHA: {{ sha }}
 - Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
 
-*[Click here to see the full workflow details](https://github.com/${{ repoFullName }}/actions/runs/${{ runId }})*
+*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+`;

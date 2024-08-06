@@ -1,9 +1,12 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as http from "@actions/http-client";
-import * as fs from "fs/promises";
 import * as Handlebars from "handlebars";
 import { encode } from "querystring";
+import cancelledTemplate from "./templates/cancelled";
+import failedTemplate from "./templates/failed";
+import inprogressTemplate from "./templates/in-progress";
+import successTemplate from "./templates/success";
 
 const HTTP_CLIENT = new http.HttpClient();
 
@@ -99,24 +102,16 @@ async function sendMessage(token: string, chatId: string, status?: string) {
   let template;
   switch (status?.toLowerCase()?.trim?.()?.replace(/\s+/g, "-")) {
     case "success":
-      template = Handlebars.precompile(
-        await fs.readFile("../templates/success.hbs", "utf8")
-      );
+      template = Handlebars.compile(successTemplate);
       break;
     case "failed":
-      template = Handlebars.precompile(
-        await fs.readFile("../templates/failed.hbs", "utf8")
-      );
+      template = Handlebars.compile(failedTemplate);
       break;
     case "cancelled":
-      template = Handlebars.precompile(
-        await fs.readFile("../templates/cancelled.hbs", "utf8")
-      );
+      template = Handlebars.compile(cancelledTemplate);
       break;
     default:
-      template = Handlebars.precompile(
-        await fs.readFile("../templates/in-progress.hbs", "utf8")
-      );
+      template = Handlebars.compile(inprogressTemplate);
       break;
   }
 
