@@ -37609,13 +37609,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(9093));
 const github = __importStar(__nccwpck_require__(5942));
 const http = __importStar(__nccwpck_require__(6372));
-const fs = __importStar(__nccwpck_require__(3292));
 const Handlebars = __importStar(__nccwpck_require__(3851));
 const querystring_1 = __nccwpck_require__(3477);
+const cancelled_1 = __importDefault(__nccwpck_require__(1318));
+const failed_1 = __importDefault(__nccwpck_require__(148));
+const in_progress_1 = __importDefault(__nccwpck_require__(799));
+const success_1 = __importDefault(__nccwpck_require__(7653));
 const HTTP_CLIENT = new http.HttpClient();
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -37693,16 +37699,16 @@ function sendMessage(token, chatId, status) {
         let template;
         switch ((_c = (_b = (_a = status === null || status === void 0 ? void 0 : status.toLowerCase()) === null || _a === void 0 ? void 0 : _a.trim) === null || _b === void 0 ? void 0 : _b.call(_a)) === null || _c === void 0 ? void 0 : _c.replace(/\s+/g, "-")) {
             case "success":
-                template = Handlebars.precompile(yield fs.readFile("../templates/success.hbs", "utf8"));
+                template = Handlebars.compile(success_1.default);
                 break;
             case "failed":
-                template = Handlebars.precompile(yield fs.readFile("../templates/failed.hbs", "utf8"));
+                template = Handlebars.compile(failed_1.default);
                 break;
             case "cancelled":
-                template = Handlebars.precompile(yield fs.readFile("../templates/cancelled.hbs", "utf8"));
+                template = Handlebars.compile(cancelled_1.default);
                 break;
             default:
-                template = Handlebars.precompile(yield fs.readFile("../templates/in-progress.hbs", "utf8"));
+                template = Handlebars.compile(in_progress_1.default);
                 break;
         }
         // console.log("Message to send to Telegram:", message);
@@ -37713,6 +37719,110 @@ function sendMessage(token, chatId, status) {
         })}`, JSON.stringify({}));
     });
 }
+
+
+/***/ }),
+
+/***/ 1318:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) was cancelled before it could complete - {{ runId }}*
+
+**> View the full workflow details
+
+- Run ID: {{ runId }}
+- Run Number: #{{ runNumber }}
+- Workflow Status: Cancelled
+- Workflow Event: {{ eventName }}
+- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+- Job: {{ job }}
+- Current Branch: {{ ref }}
+- Current SHA: {{ sha }}
+- Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
+
+*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+`;
+
+
+/***/ }),
+
+/***/ 148:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has failed - {{ runId }}*
+
+**> View the full workflow details
+
+- Run ID: {{ runId }}
+- Run Number: #{{ runNumber }}
+- Workflow Status: Failed
+- Workflow Event: {{ eventName }}
+- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+- Job: {{ job }}
+- Current Branch: {{ ref }}
+- Current SHA: {{ sha }}
+- Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
+
+*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+`;
+
+
+/***/ }),
+
+/***/ 799:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has started - {{ runId }}*
+
+**> View the full workflow details
+
+- Run ID: {{ runId }}
+- Run Number: #{{ runNumber }}
+- Workflow Status: In Progress
+- Workflow Event: {{ eventName }}
+- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+- Job: {{ job }}
+- Current Branch: {{ ref }}
+- Current SHA: {{ sha }}
+- Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
+
+*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+`;
+
+
+/***/ }),
+
+/***/ 7653:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has completed successfully - {{ runId }}*
+
+**> View the full workflow details
+
+- Run ID: {{ runId }}
+- Run Number: #{{ runNumber }}
+- Workflow Status: Success
+- Workflow Event: {{ eventName }}
+- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+- Job: {{ job }}
+- Current Branch: {{ ref }}
+- Current SHA: {{ sha }}
+- Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
+
+*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+`;
 
 
 /***/ }),
@@ -37778,14 +37888,6 @@ module.exports = require("events");
 
 "use strict";
 module.exports = require("fs");
-
-/***/ }),
-
-/***/ 3292:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs/promises");
 
 /***/ }),
 
