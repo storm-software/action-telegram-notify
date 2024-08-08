@@ -40017,7 +40017,7 @@ function sendMessage(token, chat, status) {
     // console.log("Message to send to Telegram:", message);
     console.log(`Sending message to chat: -100${chat}`);
     return axios_1.default.post(`https://api.telegram.org/bot${token}/sendMessage`, {
-        chat_id: `-100${chat}`,
+        chat_id: Number.parseInt(`-100${chat}`),
         text: template(context),
         parse_mode: "MarkdownV2",
         reply_parameters: {
