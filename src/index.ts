@@ -71,16 +71,18 @@ const sendMessage = (
   return axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
     chat_id: Number.parseInt(`-100${chat}`),
     text: template(
-      Object.keys(context).reduce((ret, key) => {
-        ret[key] = escapeEntities(context[key]);
+      Object.keys(context)
+        .filter(key => key !== "repoUrl")
+        .reduce((ret, key) => {
+          ret[key] = escapeEntities(context[key]);
 
-        return ret;
-      }, context)
+          return ret;
+        }, context)
     ),
-    parse_mode: "MarkdownV2",
-    reply_parameters: {
-      quote: github.context.runId
-    }
+    parse_mode: "MarkdownV2"
+    // reply_parameters: {
+    //   quote: github.context.runId
+    // }
   });
 };
 

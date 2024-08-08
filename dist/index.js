@@ -39998,14 +39998,16 @@ const sendMessage = (token, chat, status) => {
     console.log(`Sending message to chat: -100${chat}`);
     return axios_1.default.post(`https://api.telegram.org/bot${token}/sendMessage`, {
         chat_id: Number.parseInt(`-100${chat}`),
-        text: template(Object.keys(context).reduce((ret, key) => {
+        text: template(Object.keys(context)
+            .filter(key => key !== "repoUrl")
+            .reduce((ret, key) => {
             ret[key] = escapeEntities(context[key]);
             return ret;
         }, context)),
-        parse_mode: "MarkdownV2",
-        reply_parameters: {
-            quote: github.context.runId
-        }
+        parse_mode: "MarkdownV2"
+        // reply_parameters: {
+        //   quote: github.context.runId
+        // }
     });
 };
 (() => __awaiter(void 0, void 0, void 0, function* () {
@@ -40055,13 +40057,13 @@ const sendMessage = (token, chat, status) => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) was cancelled before it could complete*
+exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) was cancelled before it could complete *
 
 - Run ID: {{ runId }}
 - Workflow Status: Cancelled
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 
-*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+* [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
 
 
@@ -40073,13 +40075,13 @@ exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has failed*
+exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has failed *
 
 - Run ID: {{ runId }}
 - Workflow Status: Failed
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 
-*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+* [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
 
 
@@ -40091,13 +40093,13 @@ exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has started*
+exports["default"] = `* ⚡ {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has started *
 
 - Run ID: {{ runId }}
 - Workflow Status: In Progress
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 
-*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+* [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
 
 
@@ -40109,13 +40111,13 @@ exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has completed successfully*
+exports["default"] = `* 🚀 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has completed successfully *
 
 - Run ID: {{ runId }}
 - Workflow Status: Success
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 
-*[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
+* [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
 
 
