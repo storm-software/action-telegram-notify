@@ -39949,6 +39949,7 @@ const failed_1 = __importDefault(__nccwpck_require__(148));
 const in_progress_1 = __importDefault(__nccwpck_require__(799));
 const success_1 = __importDefault(__nccwpck_require__(7653));
 (() => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         let chat = core.getInput("chat") || process.env.TELEGRAM_CHAT;
         let token = core.getInput("token") || process.env.TELEGRAM_TOKEN;
@@ -39961,13 +39962,19 @@ const success_1 = __importDefault(__nccwpck_require__(7653));
             core.setFailed("Please add the `TELEGRAM_TOKEN` env variable or include the `token` input parameter when calling this action");
             process.exit(1);
         }
-        const response = yield sendMessage(token, chat, status);
-        console.log("Telegrams response:", response);
-        if (response.status != 200) {
-            core.setFailed(`Telegram FAILED: ${response.statusText} \n\n${JSON.stringify(response)}`);
-        }
-        else {
+        let response;
+        try {
+            response = yield sendMessage(token, chat, status);
+            console.log("Telegrams response:", response);
             core.setOutput("Telegrams SUCCESS", response);
+        }
+        catch (error) {
+            console.log("Telegrams error:", error);
+            core.setFailed(`Telegram FAILED: ${(_a = error === null || error === void 0 ? void 0 : error.message) !== null && _a !== void 0 ? _a : "No Error Message"} \n\nException: ${JSON.stringify((error === null || error === void 0 ? void 0 : error.isAxiosError) &&
+                typeof error.toJSON === "function"
+                ? error.toJSON()
+                : error)}`);
+            process.exit(1);
         }
         return response;
     }
@@ -39987,36 +39994,35 @@ const success_1 = __importDefault(__nccwpck_require__(7653));
  * @returns the response from the Telegram API
  */
 function sendMessage(token, chat, status) {
-    return __awaiter(this, void 0, void 0, function* () {
-        var _a, _b, _c;
-        const repoFullName = `${github.context.repo.owner}/${github.context.repo.repo}`;
-        const repoUrl = `https://github.com/${repoFullName}`;
-        let template;
-        switch ((_c = (_b = (_a = status === null || status === void 0 ? void 0 : status.toLowerCase()) === null || _a === void 0 ? void 0 : _a.trim) === null || _b === void 0 ? void 0 : _b.call(_a)) === null || _c === void 0 ? void 0 : _c.replace(/\s+/g, "-")) {
-            case "success":
-                template = Handlebars.compile(success_1.default);
-                break;
-            case "failed":
-                template = Handlebars.compile(failed_1.default);
-                break;
-            case "cancelled":
-                template = Handlebars.compile(cancelled_1.default);
-                break;
-            default:
-                template = Handlebars.compile(in_progress_1.default);
-                break;
+    var _a, _b, _c;
+    const repoFullName = `${github.context.repo.owner}/${github.context.repo.repo}`;
+    const repoUrl = `https://github.com/${repoFullName}`;
+    const context = Object.assign(Object.assign({}, github.context), { repoUrl,
+        repoFullName, checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`, timestamp: new Date().toISOString() });
+    let template;
+    switch ((_c = (_b = (_a = status === null || status === void 0 ? void 0 : status.toLowerCase()) === null || _a === void 0 ? void 0 : _a.trim) === null || _b === void 0 ? void 0 : _b.call(_a)) === null || _c === void 0 ? void 0 : _c.replace(/\s+/g, "-")) {
+        case "success":
+            template = Handlebars.compile(success_1.default);
+            break;
+        case "failed":
+            template = Handlebars.compile(failed_1.default);
+            break;
+        case "cancelled":
+            template = Handlebars.compile(cancelled_1.default);
+            break;
+        default:
+            template = Handlebars.compile(in_progress_1.default);
+            break;
+    }
+    // console.log("Message to send to Telegram:", message);
+    console.log(`Sending message to chat: -100${chat}`);
+    return axios_1.default.post(`https://api.telegram.org/bot${token}/sendMessage`, {
+        chat_id: `-100${chat}`,
+        text: template(context),
+        parse_mode: "MarkdownV2",
+        reply_parameters: {
+            quote: github.context.runId
         }
-        // console.log("Message to send to Telegram:", message);
-        console.log(`Sending message to chat: -100${chat}`);
-        return yield axios_1.default.post(`https://api.telegram.org/bot${token}/sendMessage`, {
-            chat_id: `-100${chat}`,
-            text: template(Object.assign(Object.assign({}, github.context), { repoUrl,
-                repoFullName, checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`, timestamp: new Date().toISOString() })),
-            parse_mode: "MarkdownV2",
-            reply_parameters: {
-                quote: github.context.runId
-            }
-        });
     });
 }
 

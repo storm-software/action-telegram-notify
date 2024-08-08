@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import * as Handlebars from "handlebars";
 import cancelledTemplate from "./templates/cancelled";
 import failedTemplate from "./templates/failed";
@@ -25,15 +25,24 @@ import successTemplate from "./templates/success";
       );
       process.exit(1);
     }
-    const response = await sendMessage(token, chat, status);
 
-    console.log("Telegrams response:", response);
-    if (response.status != 200) {
-      core.setFailed(
-        `Telegram FAILED: ${response.statusText} \n\n${JSON.stringify(response)}`
-      );
-    } else {
+    let response;
+    try {
+      response = await sendMessage(token, chat, status);
+
+      console.log("Telegrams response:", response);
       core.setOutput("Telegrams SUCCESS", response);
+    } catch (error) {
+      console.log("Telegrams error:", error);
+      core.setFailed(
+        `Telegram FAILED: ${(error as AxiosError)?.message ?? "No Error Message"} \n\nException: ${JSON.stringify(
+          (error as AxiosError)?.isAxiosError &&
+            typeof (error as AxiosError).toJSON === "function"
+            ? (error as AxiosError).toJSON()
+            : error
+        )}`
+      );
+      process.exit(1);
     }
 
     return response;
@@ -53,38 +62,39 @@ import successTemplate from "./templates/success";
  * @param status - status of the job
  * @returns the response from the Telegram API
  */
-async function sendMessage(token: string, chat: string, status: string) {
+function sendMessage(token: string, chat: string, status: string) {
   const repoFullName = `${github.context.repo.owner}/${github.context.repo.repo}`;
   const repoUrl = `https://github.com/${repoFullName}`;
+  const context = {
+    ...github.context,
+    repoUrl,
+    repoFullName,
+    checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`,
+    timestamp: new Date().toISOString()
+  };
 
-  let template;
+  let template!: HandlebarsTemplateDelegate<typeof context>;
   switch (status?.toLowerCase()?.trim?.()?.replace(/\s+/g, "-")) {
     case "success":
-      template = Handlebars.compile(successTemplate);
+      template = Handlebars.compile<typeof context>(successTemplate);
       break;
     case "failed":
-      template = Handlebars.compile(failedTemplate);
+      template = Handlebars.compile<typeof context>(failedTemplate);
       break;
     case "cancelled":
-      template = Handlebars.compile(cancelledTemplate);
+      template = Handlebars.compile<typeof context>(cancelledTemplate);
       break;
     default:
-      template = Handlebars.compile(inprogressTemplate);
+      template = Handlebars.compile<typeof context>(inprogressTemplate);
       break;
   }
 
   // console.log("Message to send to Telegram:", message);
   console.log(`Sending message to chat: -100${chat}`);
 
-  return await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
+  return axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
     chat_id: `-100${chat}`,
-    text: template({
-      ...github.context,
-      repoUrl,
-      repoFullName,
-      checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`,
-      timestamp: new Date().toISOString()
-    }),
+    text: template(context),
     parse_mode: "MarkdownV2",
     reply_parameters: {
       quote: github.context.runId
