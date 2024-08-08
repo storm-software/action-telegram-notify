@@ -2,7 +2,6 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import axios from "axios";
 import * as Handlebars from "handlebars";
-import { encode } from "querystring";
 import cancelledTemplate from "./templates/cancelled";
 import failedTemplate from "./templates/failed";
 import inprogressTemplate from "./templates/in-progress";
@@ -10,10 +9,11 @@ import successTemplate from "./templates/success";
 
 (async () => {
   try {
-    let chatId = core.getInput("chat") || process.env.TELEGRAM_CHAT;
+    let chat = core.getInput("chat") || process.env.TELEGRAM_CHAT;
     let token = core.getInput("token") || process.env.TELEGRAM_TOKEN;
+    let status = core.getInput("status");
 
-    if (!chatId) {
+    if (!chat) {
       core.setFailed(
         "Please add the `TELEGRAM_CHAT` env variable or include the `chat` input parameter when calling this action"
       );
@@ -25,54 +25,13 @@ import successTemplate from "./templates/success";
       );
       process.exit(1);
     }
-
-    // let response = await HTTP_CLIENT.get(contentUrl);
-    // let message = encodeURI(await response.readBody());
-
-    // const { repo, ref, sha, workflow, actor } = github.context;
-
-    // let icon: String;
-    // switch (status) {
-    //   case "success":
-    //     icon = "✅";
-    //     break;
-    //   case "failure":
-    //     icon = "❌";
-    //     break;
-    //   default:
-    //     icon = "⚠️";
-    //     break;
-    // }
-    // const uri = `https://api.telegram.org/bot${token}/sendMessage`;
-
-    // const context = ;
-
-    // const text = `${icon} [${repoFullname}](${repoUrl}/actions) ${workflow} *${jobStatus}*
-
-    // \`${ref}\` \`${sha.substr(0, 7)}\` by *${actor}*
-
-    // [View details]()`;
-
-    // return request.post(uri, {
-    //   body: {
-    //     text,
-    //     chat_id: chatId,
-    //     parse_mode: "Markdown"
-    //   },
-    //   json: true
-    // });
-
-    // const telegramMessage = await telegramResponse.readBody();
-
-    // - name: Send Telegram notification - Deployment successful
-    // run: |
-    //   notification_text=
-
-    const response = await sendMessage(token, chatId, "success");
+    const response = await sendMessage(token, chat, status);
 
     console.log("Telegrams response:", response);
     if (response.status != 200) {
-      core.setFailed(`Telegram FAILED: ${JSON.stringify(response.data)}`);
+      core.setFailed(
+        `Telegram FAILED: ${response.statusText} \n\n${JSON.stringify(response)}`
+      );
     } else {
       core.setOutput("Telegrams SUCCESS", response);
     }
@@ -89,11 +48,12 @@ import successTemplate from "./templates/success";
 /**
  * Send a Telegram message.
  *
- * @param token the Telegram bot token to send the message
- * @param chatId id of targeted channel or group, to which the message will be sent
- * @param status status of the job
+ * @param token - the Telegram bot token to send the message
+ * @param chat - id of targeted channel or group, to which the message will be sent
+ * @param status - status of the job
+ * @returns the response from the Telegram API
  */
-async function sendMessage(token: string, chatId: string, status?: string) {
+async function sendMessage(token: string, chat: string, status: string) {
   const repoFullName = `${github.context.repo.owner}/${github.context.repo.repo}`;
   const repoUrl = `https://github.com/${repoFullName}`;
 
@@ -114,22 +74,20 @@ async function sendMessage(token: string, chatId: string, status?: string) {
   }
 
   // console.log("Message to send to Telegram:", message);
-  console.log(`Sending message to chat: -100${chatId}`);
+  console.log(`Sending message to chat: -100${chat}`);
 
   return await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
-    chat_id: `-100${chatId}`,
-    text: encodeURI(
-      template({
-        ...github.context,
-        repoUrl,
-        repoFullName,
-        checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`,
-        timestamp: new Date().toISOString()
-      })
-    ),
+    chat_id: `-100${chat}`,
+    text: template({
+      ...github.context,
+      repoUrl,
+      repoFullName,
+      checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`,
+      timestamp: new Date().toISOString()
+    }),
     parse_mode: "MarkdownV2",
-    reply_parameters: encode({
+    reply_parameters: {
       quote: github.context.runId
-    })
+    }
   });
 }
