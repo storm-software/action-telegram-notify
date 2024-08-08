@@ -70,6 +70,7 @@ function sendMessage(token: string, chat: string, status: string) {
     repoUrl,
     repoFullName,
     checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`,
+    branchName: github.context.ref.replace("refs/heads/", ""),
     timestamp: new Date().toISOString()
   };
 

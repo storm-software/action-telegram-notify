@@ -39998,7 +39998,7 @@ function sendMessage(token, chat, status) {
     const repoFullName = `${github.context.repo.owner}/${github.context.repo.repo}`;
     const repoUrl = `https://github.com/${repoFullName}`;
     const context = Object.assign(Object.assign({}, github.context), { repoUrl,
-        repoFullName, checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`, timestamp: new Date().toISOString() });
+        repoFullName, checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`, branchName: github.context.ref.replace("refs/heads/", ""), timestamp: new Date().toISOString() });
     let template;
     switch ((_c = (_b = (_a = status === null || status === void 0 ? void 0 : status.toLowerCase()) === null || _a === void 0 ? void 0 : _a.trim) === null || _b === void 0 ? void 0 : _b.call(_a)) === null || _c === void 0 ? void 0 : _c.replace(/\s+/g, "-")) {
         case "success":
@@ -40035,17 +40035,11 @@ function sendMessage(token, chat, status) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) was cancelled before it could complete*
+exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) was cancelled before it could complete*
 
 - Run ID: {{ runId }}
-- Run Number: #{{ runNumber }}
 - Workflow Status: Cancelled
-- Workflow Event: {{ eventName }}
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
-- Job: {{ job }}
-- Current Branch: {{ ref }}
-- Current SHA: {{ sha }}
-- Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
 
 *[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
 `;
@@ -40059,17 +40053,11 @@ exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}](
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has failed*
+exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has failed*
 
 - Run ID: {{ runId }}
-- Run Number: #{{ runNumber }}
 - Workflow Status: Failed
-- Workflow Event: {{ eventName }}
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
-- Job: {{ job }}
-- Current Branch: {{ ref }}
-- Current SHA: {{ sha }}
-- Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
 
 *[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
 `;
@@ -40083,17 +40071,11 @@ exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}](
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has started*
+exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has started*
 
 - Run ID: {{ runId }}
-- Run Number: #{{ runNumber }}
 - Workflow Status: In Progress
-- Workflow Event: {{ eventName }}
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
-- Job: {{ job }}
-- Current Branch: {{ ref }}
-- Current SHA: {{ sha }}
-- Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
 
 *[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
 `;
@@ -40107,17 +40089,11 @@ exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}](
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `*{{ action }} workflow for [{{ repoFullName }}@{{ ref }}]({{ repoUrl }}) has completed successfully*
+exports["default"] = `*{{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has completed successfully*
 
 - Run ID: {{ runId }}
-- Run Number: #{{ runNumber }}
 - Workflow Status: Success
-- Workflow Event: {{ eventName }}
 - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
-- Job: {{ job }}
-- Current Branch: {{ ref }}
-- Current SHA: {{ sha }}
-- Checks Report: [View details]({{ repoUrl }}/runs/{{ runId }})
 
 *[Click here to see the full workflow details](https://github.com/{{ repoFullName }}/actions/runs/{{ runId }})*
 `;
