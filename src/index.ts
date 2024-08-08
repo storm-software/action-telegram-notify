@@ -95,10 +95,34 @@ function sendMessage(token: string, chat: string, status: string) {
 
   return axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
     chat_id: Number.parseInt(`-100${chat}`),
-    text: template(context),
+    text: template(
+      Object.keys(context).reduce((ret, key) => {
+        ret[key] = escapeEntities(context[key]);
+
+        return ret;
+      }, context)
+    ),
     parse_mode: "MarkdownV2",
     reply_parameters: {
       quote: github.context.runId
     }
   });
+}
+
+// https://core.telegram.org/bots/api#markdownv2-style
+// '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'
+const charsNeedEscape = "_*[]()~`>#+-=|{}.!";
+
+function escapeEntities(input: string) {
+  const len = input.length;
+  let output = "";
+  for (let i = 0; i < len; i++) {
+    const c = input[i];
+    if (charsNeedEscape.indexOf(c) >= 0) {
+      output += "\\" + c;
+    } else {
+      output += c;
+    }
+  }
+  return output;
 }
