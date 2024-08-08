@@ -39944,16 +39944,16 @@ const core = __importStar(__nccwpck_require__(9093));
 const github = __importStar(__nccwpck_require__(5942));
 const axios_1 = __importDefault(__nccwpck_require__(7014));
 const Handlebars = __importStar(__nccwpck_require__(3851));
-const querystring_1 = __nccwpck_require__(3477);
 const cancelled_1 = __importDefault(__nccwpck_require__(1318));
 const failed_1 = __importDefault(__nccwpck_require__(148));
 const in_progress_1 = __importDefault(__nccwpck_require__(799));
 const success_1 = __importDefault(__nccwpck_require__(7653));
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let chatId = core.getInput("chat") || process.env.TELEGRAM_CHAT;
+        let chat = core.getInput("chat") || process.env.TELEGRAM_CHAT;
         let token = core.getInput("token") || process.env.TELEGRAM_TOKEN;
-        if (!chatId) {
+        let status = core.getInput("status");
+        if (!chat) {
             core.setFailed("Please add the `TELEGRAM_CHAT` env variable or include the `chat` input parameter when calling this action");
             process.exit(1);
         }
@@ -39961,42 +39961,10 @@ const success_1 = __importDefault(__nccwpck_require__(7653));
             core.setFailed("Please add the `TELEGRAM_TOKEN` env variable or include the `token` input parameter when calling this action");
             process.exit(1);
         }
-        // let response = await HTTP_CLIENT.get(contentUrl);
-        // let message = encodeURI(await response.readBody());
-        // const { repo, ref, sha, workflow, actor } = github.context;
-        // let icon: String;
-        // switch (status) {
-        //   case "success":
-        //     icon = "✅";
-        //     break;
-        //   case "failure":
-        //     icon = "❌";
-        //     break;
-        //   default:
-        //     icon = "⚠️";
-        //     break;
-        // }
-        // const uri = `https://api.telegram.org/bot${token}/sendMessage`;
-        // const context = ;
-        // const text = `${icon} [${repoFullname}](${repoUrl}/actions) ${workflow} *${jobStatus}*
-        // \`${ref}\` \`${sha.substr(0, 7)}\` by *${actor}*
-        // [View details]()`;
-        // return request.post(uri, {
-        //   body: {
-        //     text,
-        //     chat_id: chatId,
-        //     parse_mode: "Markdown"
-        //   },
-        //   json: true
-        // });
-        // const telegramMessage = await telegramResponse.readBody();
-        // - name: Send Telegram notification - Deployment successful
-        // run: |
-        //   notification_text=
-        const response = yield sendMessage(token, chatId, "success");
+        const response = yield sendMessage(token, chat, status);
         console.log("Telegrams response:", response);
         if (response.status != 200) {
-            core.setFailed(`Telegram FAILED: ${JSON.stringify(response.data)}`);
+            core.setFailed(`Telegram FAILED: ${response.statusText} \n\n${JSON.stringify(response)}`);
         }
         else {
             core.setOutput("Telegrams SUCCESS", response);
@@ -40013,11 +39981,12 @@ const success_1 = __importDefault(__nccwpck_require__(7653));
 /**
  * Send a Telegram message.
  *
- * @param token the Telegram bot token to send the message
- * @param chatId id of targeted channel or group, to which the message will be sent
- * @param status status of the job
+ * @param token - the Telegram bot token to send the message
+ * @param chat - id of targeted channel or group, to which the message will be sent
+ * @param status - status of the job
+ * @returns the response from the Telegram API
  */
-function sendMessage(token, chatId, status) {
+function sendMessage(token, chat, status) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
         const repoFullName = `${github.context.repo.owner}/${github.context.repo.repo}`;
@@ -40038,15 +40007,15 @@ function sendMessage(token, chatId, status) {
                 break;
         }
         // console.log("Message to send to Telegram:", message);
-        console.log(`Sending message to chat: -100${chatId}`);
+        console.log(`Sending message to chat: -100${chat}`);
         return yield axios_1.default.post(`https://api.telegram.org/bot${token}/sendMessage`, {
-            chat_id: `-100${chatId}`,
-            text: encodeURI(template(Object.assign(Object.assign({}, github.context), { repoUrl,
-                repoFullName, checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`, timestamp: new Date().toISOString() }))),
+            chat_id: `-100${chat}`,
+            text: template(Object.assign(Object.assign({}, github.context), { repoUrl,
+                repoFullName, checkListUrl: `${repoUrl}/commit/${github.context.sha}/checks`, timestamp: new Date().toISOString() })),
             parse_mode: "MarkdownV2",
-            reply_parameters: (0, querystring_1.encode)({
+            reply_parameters: {
                 quote: github.context.runId
-            })
+            }
         });
     });
 }
