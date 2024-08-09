@@ -40062,9 +40062,9 @@ const sendMessage = (token, chat, status) => {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) was cancelled before it could complete *
 
- - Run ID: {{ runId }}
- - Workflow Status: Cancelled
- - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+\\- Run ID: {{ runId }}
+\\- Workflow Status: Cancelled
+\\- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 
 * [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
@@ -40080,9 +40080,9 @@ exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branc
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has failed *
 
- - Run ID: {{ runId }}
- - Workflow Status: Failed
- - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+\\- Run ID: {{ runId }}
+\\- Workflow Status: Failed
+\\- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 
 * [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
@@ -40098,9 +40098,9 @@ exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branc
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports["default"] = `* 🚀 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has started *
 
- - Run ID: {{ runId }}
- - Workflow Status: In Progress
- - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+\\- Run ID: {{ runId }}
+\\- Workflow Status: In Progress
+\\- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 
 * [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
@@ -40116,9 +40116,9 @@ exports["default"] = `* 🚀 {{ job }} workflow for [{{ repoFullName }}@{{ branc
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports["default"] = `* 🎉 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has completed successfully *
 
- - Run ID: {{ runId }}
- - Workflow Status: Success
- - Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+\\- Run ID: {{ runId }}
+\\- Workflow Status: Success
+\\- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
 
 * [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
