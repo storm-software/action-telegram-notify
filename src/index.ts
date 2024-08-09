@@ -83,10 +83,10 @@ const sendMessage = (
           return ret;
         }, context)
     ),
-    parse_mode: "MarkdownV2"
-    // reply_parameters: {
-    //   quote: github.context.runId
-    // }
+    parse_mode: "MarkdownV2",
+    reply_parameters: {
+      quote: github.context.runId
+    }
   });
 };
 
@@ -109,12 +109,10 @@ const sendMessage = (
       process.exit(1);
     }
 
-    let response;
     try {
-      response = await sendMessage(token, chat, status);
+      await sendMessage(token, chat, status);
 
-      console.log("Telegrams response:", response);
-      core.setOutput("Telegrams SUCCESS", response);
+      console.log("Telegrams SUCCESS");
     } catch (error) {
       console.log("Telegrams error:", error);
       core.setFailed(
@@ -127,8 +125,6 @@ const sendMessage = (
       );
       process.exit(1);
     }
-
-    return response;
   } catch (error) {
     core.setFailed(error as Error);
   }

@@ -40007,10 +40007,10 @@ const sendMessage = (token, chat, status) => {
             ret[key] = escapeEntities(context[key]);
             return ret;
         }, context)),
-        parse_mode: "MarkdownV2"
-        // reply_parameters: {
-        //   quote: github.context.runId
-        // }
+        parse_mode: "MarkdownV2",
+        reply_parameters: {
+            quote: github.context.runId
+        }
     });
 };
 (() => __awaiter(void 0, void 0, void 0, function* () {
@@ -40027,11 +40027,9 @@ const sendMessage = (token, chat, status) => {
             core.setFailed("Please add the `TELEGRAM_TOKEN` env variable or include the `token` input parameter when calling this action");
             process.exit(1);
         }
-        let response;
         try {
-            response = yield sendMessage(token, chat, status);
-            console.log("Telegrams response:", response);
-            core.setOutput("Telegrams SUCCESS", response);
+            yield sendMessage(token, chat, status);
+            console.log("Telegrams SUCCESS");
         }
         catch (error) {
             console.log("Telegrams error:", error);
@@ -40041,7 +40039,6 @@ const sendMessage = (token, chat, status) => {
                 : error)}`);
             process.exit(1);
         }
-        return response;
     }
     catch (error) {
         core.setFailed(error);
@@ -40060,11 +40057,11 @@ const sendMessage = (token, chat, status) => {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) was cancelled before it could complete *
+exports["default"] = `* 🚨 {{ workflow }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) was cancelled before it could complete *
 
 \\- Run ID: {{ runId }}
-\\- Workflow Status: Cancelled
-\\- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+\\- Status: Cancelled
+\\- Actor: [{{ actor }}](https://github.com/{{actor}})
 
 * [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
@@ -40078,11 +40075,11 @@ exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branc
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has failed *
+exports["default"] = `* 🚨 {{ workflow }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has failed *
 
 \\- Run ID: {{ runId }}
-\\- Workflow Status: Failed
-\\- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+\\- Status: Failed
+\\- Actor: [{{ actor }}](https://github.com/{{actor}})
 
 * [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
@@ -40096,11 +40093,11 @@ exports["default"] = `* 🚨 {{ job }} workflow for [{{ repoFullName }}@{{ branc
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `* 🚀 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has started *
+exports["default"] = `* 🚀 {{ workflow }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has started *
 
 \\- Run ID: {{ runId }}
-\\- Workflow Status: In Progress
-\\- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+\\- Status: In Progress
+\\- Actor: [{{ actor }}](https://github.com/{{actor}})
 
 * [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
@@ -40114,11 +40111,11 @@ exports["default"] = `* 🚀 {{ job }} workflow for [{{ repoFullName }}@{{ branc
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports["default"] = `* 🎉 {{ job }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has completed successfully *
+exports["default"] = `* 🎉 {{ workflow }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has completed successfully *
 
 \\- Run ID: {{ runId }}
-\\- Workflow Status: Success
-\\- Workflow Actor: [{{ actor }}](https://github.com/{{actor}})
+\\- Status: Success
+\\- Actor: [{{ actor }}](https://github.com/{{actor}})
 
 * [Click here to see the full workflow details]({{ repoUrl }}/actions/runs/{{ runId }}) *
 `;
