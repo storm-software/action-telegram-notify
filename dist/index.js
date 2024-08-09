@@ -40007,10 +40007,10 @@ const sendMessage = (token, chat, status) => {
             ret[key] = escapeEntities(context[key]);
             return ret;
         }, context)),
-        parse_mode: "MarkdownV2",
-        reply_parameters: {
-            quote: github.context.runId
-        }
+        parse_mode: "MarkdownV2"
+        // reply_parameters: {
+        //   quote: github.context.runId
+        // }
     });
 };
 (() => __awaiter(void 0, void 0, void 0, function* () {

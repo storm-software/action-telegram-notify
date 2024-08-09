@@ -83,10 +83,10 @@ const sendMessage = (
           return ret;
         }, context)
     ),
-    parse_mode: "MarkdownV2",
-    reply_parameters: {
-      quote: github.context.runId
-    }
+    parse_mode: "MarkdownV2"
+    // reply_parameters: {
+    //   quote: github.context.runId
+    // }
   });
 };
 
@@ -111,7 +111,6 @@ const sendMessage = (
 
     try {
       await sendMessage(token, chat, status);
-
       console.log("Telegrams SUCCESS");
     } catch (error) {
       console.log("Telegrams error:", error);
