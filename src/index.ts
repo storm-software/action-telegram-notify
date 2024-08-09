@@ -7,7 +7,11 @@ import failedTemplate from "./templates/failed";
 import inprogressTemplate from "./templates/in-progress";
 import successTemplate from "./templates/success";
 
-const escapeEntities = (input: string): string => {
+const escapeEntities = (input: any): any => {
+  if (typeof input !== "string") {
+    return input;
+  }
+
   // https://core.telegram.org/bots/api#markdownv2-style
   // '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'
   const charsNeedEscape = "_*[]()~`>#+-=|{}.!";
