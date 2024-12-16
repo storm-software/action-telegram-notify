@@ -39988,6 +39988,7 @@ const sendMessage = (token, chat, status) => {
             template = Handlebars.compile(success_1.default);
             break;
         case "failed":
+        case "failure":
             template = Handlebars.compile(failed_1.default);
             break;
         case "cancelled":

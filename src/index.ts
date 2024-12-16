@@ -59,6 +59,7 @@ const sendMessage = (
       template = Handlebars.compile<typeof context>(successTemplate);
       break;
     case "failed":
+    case "failure":
       template = Handlebars.compile<typeof context>(failedTemplate);
       break;
     case "cancelled":
