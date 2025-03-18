@@ -44,7 +44,7 @@
     "@actions/exec": "^1.1.1",
     "@actions/github": "^6.0.0",
     "@actions/http-client": "^2.2.3",
-    "@dotenvx/dotenvx": "^1.38.5",
+    "@dotenvx/dotenvx": "^1.39.0",
     "@octokit/core": "^6.1.4",
     "@vercel/ncc": "^0.38.3",
     "axios": "^1.8.3",
