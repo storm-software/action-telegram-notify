@@ -56,7 +56,7 @@
   "devDependencies": {
     "@grammyjs/types": "^3.19.0",
     "@storm-software/prettier": "latest",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.14",
     "@types/yargs": "^17.0.33",
     "copyfiles": "^2.4.1",
     "prettier": "^3.5.3",
