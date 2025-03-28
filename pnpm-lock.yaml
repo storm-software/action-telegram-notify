@@ -52,8 +52,8 @@ importers:
         specifier: latest
         version: 0.42.22(prettier-plugin-organize-imports@4.0.0(prettier@3.5.3)(typescript@5.5.4))(prettier-plugin-pkg@0.18.1(prettier@3.5.3))(prettier-plugin-prisma@5.0.0(prettier@3.5.3))(prettier-plugin-sh@0.14.0(prettier@3.5.3))(prettier@3.5.3)
       '@types/node':
-        specifier: ^22.13.11
-        version: 22.13.11
+        specifier: ^22.13.14
+        version: 22.13.14
       '@types/yargs':
         specifier: ^17.0.33
         version: 17.0.33
@@ -221,8 +221,8 @@ packages:
       prettier-plugin-tailwindcss:
         optional: true
 
-  '@types/node@22.13.11':
-    resolution: {integrity: sha512-iEUCUJoU0i3VnrCmgoWCXttklWcvoCIx4jzcP22fioIVSdTmjgoEvmAO/QPw6TcS9k5FrNgn4w7q5lGOd1CT5g==}
+  '@types/node@22.13.14':
+    resolution: {integrity: sha512-Zs/Ollc1SJ8nKUAgc7ivOEdIBM8JAKgrqqUYi2J997JuKO7/tpQC+WCetQ1sypiKCQWHdvdg9wBNpUPEWZae7w==}
 
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -886,7 +886,7 @@ snapshots:
       prettier-plugin-prisma: 5.0.0(prettier@3.5.3)
       prettier-plugin-sh: 0.14.0(prettier@3.5.3)
 
-  '@types/node@22.13.11':
+  '@types/node@22.13.14':
     dependencies:
       undici-types: 6.20.0
 
