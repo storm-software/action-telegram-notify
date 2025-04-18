@@ -44,7 +44,7 @@
     "@actions/exec": "^1.1.1",
     "@actions/github": "^6.0.0",
     "@actions/http-client": "^2.2.3",
-    "@dotenvx/dotenvx": "^1.39.1",
+    "@dotenvx/dotenvx": "^1.40.1",
     "@octokit/core": "^6.1.5",
     "@vercel/ncc": "^0.38.3",
     "axios": "^1.8.4",
@@ -54,7 +54,7 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "@grammyjs/types": "^3.19.0",
+    "@grammyjs/types": "^3.20.0",
     "@storm-software/prettier": "latest",
     "@types/node": "^22.14.1",
     "@types/yargs": "^17.0.33",
