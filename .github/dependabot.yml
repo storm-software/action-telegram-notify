@@ -11,12 +11,9 @@ updates:
   - package-ecosystem: "npm"
     assignees:
       - "@sullivanpj"
-      - "@storm-software/operations"
-    reviewers:
-      - "@sullivanpj"
-      - "@storm-software/operations"
+      - "@storm-software/architecture"
     commit-message:
-      prefix: "deps(monorepo):"
+      prefix: "deps:"
     directory: "/"
     schedule:
       interval: "monthly"
@@ -32,12 +29,9 @@ updates:
   - package-ecosystem: "github-actions"
     assignees:
       - "@sullivanpj"
-      - "@storm-software/operations"
-    reviewers:
-      - "@sullivanpj"
-      - "@storm-software/operations"
+      - "@storm-software/architecture"
     commit-message:
-      prefix: "deps(monorepo):"
+      prefix: "deps:"
     directory: "/"
     schedule:
       interval: "monthly"
@@ -51,12 +45,9 @@ updates:
   - package-ecosystem: "bundler"
     assignees:
       - "@sullivanpj"
-      - "@storm-software/operations"
-    reviewers:
-      - "@sullivanpj"
-      - "@storm-software/operations"
+      - "@storm-software/architecture"
     commit-message:
-      prefix: "deps(monorepo):"
+      prefix: "deps:"
     directory: "/"
     schedule:
       interval: "monthly"
