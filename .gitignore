@@ -428,3 +428,26 @@ MigrationBackup/
 
 # Sentry Auth Token
 .sentryclirc
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml

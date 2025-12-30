@@ -22,10 +22,9 @@
   },
   "license": "Apache-2.0",
   "private": true,
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@10.26.0",
   "engines": {
-    "node": ">=20.19.2",
-    "pnpm": ">=9.15.9"
+    "pnpm": ">=10.24.0"
   },
   "main": "dist/index.js",
   "keywords": [
@@ -36,30 +35,30 @@
   ],
   "scripts": {
     "build": "dotenvx run -- ncc build ./src/index.ts",
+    "commit": "pnpm exec storm-git commit",
     "postbuild": "pnpm copyfiles ./README.md ./LICENSE dist",
-    "prebuild": "pnpm rimraf dist"
+    "prebuild": "pnpm rimraf dist",
+    "push": "git push origin main:main"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
-    "@actions/exec": "^1.1.1",
+    "@actions/core": "^2.0.1",
+    "@actions/exec": "^2.0.0",
     "@actions/github": "^6.0.1",
-    "@actions/http-client": "^2.2.3",
-    "@dotenvx/dotenvx": "^1.44.1",
-    "@octokit/core": "^6.1.5",
-    "@vercel/ncc": "^0.38.3",
-    "axios": "^1.9.0",
-    "fs-extra": "^11.3.0",
+    "@actions/http-client": "^3.0.0",
+    "@dotenvx/dotenvx": "^1.51.4",
+    "@octokit/core": "^7.0.6",
+    "@vercel/ncc": "^0.38.4",
+    "axios": "^1.13.2",
     "handlebars": "^4.7.8",
-    "tslib": "^2.8.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@grammyjs/types": "^3.20.0",
+    "@grammyjs/types": "^3.22.2",
+    "@storm-software/git-tools": "latest",
     "@storm-software/prettier": "latest",
-    "@types/node": "^22.15.30",
-    "@types/yargs": "^17.0.33",
+    "@types/node": "^25.0.3",
     "copyfiles": "^2.4.1",
-    "prettier": "^3.5.3",
+    "prettier": "^3.7.4",
     "rimraf": "^6.0.1"
   },
   "prettier": "@storm-software/prettier/config.json",

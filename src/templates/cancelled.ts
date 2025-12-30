@@ -1,4 +1,4 @@
-export default `* 🚨 {{ workflow }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) was cancelled before it could complete *
+export default `* 🛑 {{ workflow }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) was cancelled before it could complete *
 
 \\- Run ID: {{ runId }}
 \\- Status: Cancelled

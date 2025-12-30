@@ -11,21 +11,19 @@ branding:
 
 inputs:
   token:
-    description: "The Storm Notifications Bot's Telegram token"
+    description: "The Storm Notification Bot's Telegram token"
     required: false
   chat:
     description: 'The target to which the message will be sent - can be a Telegram Channel or Group. Please note: the "-100" prefix is added by the action.'
     required: false
   status:
-    description: 'The status of the job that triggered the action'
+    description: "The status of the job that triggered the action"
     required: true
-    default: 'In Progress'
+    default: "In Progress"
 
 runs:
-  using: "node12"
+  using: "node24"
   main: "dist/index.js"
-
-
 # inputs:
 #   stormBot:
 #     description: The github username of the Storm bot
@@ -34,6 +32,4 @@ runs:
 #   stormBotGitHubToken:
 #     description: The github token of the Storm bot
 #     required: true
-
-
 

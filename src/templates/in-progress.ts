@@ -1,4 +1,4 @@
-export default `* 🚀 {{ workflow }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has started *
+export default `* ⚡️ {{ workflow }} workflow for [{{ repoFullName }}@{{ branchName }}]({{ repoUrl }}) has started *
 
 \\- Run ID: {{ runId }}
 \\- Status: In Progress
