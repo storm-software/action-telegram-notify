@@ -34,7 +34,7 @@
     "storm-ops"
   ],
   "scripts": {
-    "build": "dotenvx run -- ncc build ./src/index.ts",
+    "build": "pnpm exec ncc build ./src/index.ts",
     "commit": "pnpm exec storm-git commit",
     "postbuild": "pnpm copyfiles ./README.md ./LICENSE dist",
     "prebuild": "pnpm rimraf dist",
@@ -45,7 +45,6 @@
     "@actions/exec": "^2.0.0",
     "@actions/github": "^6.0.1",
     "@actions/http-client": "^3.0.0",
-    "@dotenvx/dotenvx": "^1.51.4",
     "@octokit/core": "^7.0.6",
     "@vercel/ncc": "^0.38.4",
     "axios": "^1.13.2",
@@ -53,7 +52,6 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@grammyjs/types": "^3.22.2",
     "@storm-software/git-tools": "latest",
     "@storm-software/prettier": "latest",
     "@types/node": "^25.0.3",
