@@ -37,6 +37,8 @@ export default defineConfig({
   nodeProtocol: true,
   unbundle: false,
   deps: {
-    skipNodeModulesBundle: false
+    skipNodeModulesBundle: false,
+    alwaysBundle: "*",
+    onlyBundle: false
   }
 });
