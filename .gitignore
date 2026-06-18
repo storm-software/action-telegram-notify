@@ -4,13 +4,14 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # compiled output
-# dist
+dist
 tmp
 /out-tsc
 out
 .nx
 
-# build
+powerlines.d.ts
+.powerlines
 
 # dependencies
 node_modules
@@ -23,14 +24,6 @@ node_modules
 *.launch
 .settings/
 *.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/cspell.json
 
 # misc
 /.sass-cache
@@ -100,6 +93,7 @@ bld/
 # [Bb]in/
 [Oo]bj/
 [Ll]og/
+!packages/[Ll]og
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -129,7 +123,6 @@ BenchmarkDotNet.Artifacts/
 # .NET Core
 project.lock.json
 project.fragment.lock.json
-artifacts/
 
 # StyleCop
 StyleCopReport.xml
@@ -330,8 +323,6 @@ ServiceFabricBackup/
 *.bim_*.settings
 *.rptproj.rsuser
 *- [Bb]ackup.rdl
-*- [Bb]ackup ([0-9]).rdl
-*- [Bb]ackup ([0-9][0-9]).rdl
 
 # Microsoft Fakes
 FakesAssemblies/
@@ -419,9 +410,6 @@ MigrationBackup/
 
 # Local Environment Variables
 **/.env.local
-
-# Local Environment Variables Keys
-**/.env.keys
 
 # Local stoplight config
 **/.stoplight.json

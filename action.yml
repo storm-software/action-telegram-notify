@@ -6,7 +6,7 @@ description: "A composite GitHub action used to write a notification message to 
 author: "sullivanpj"
 
 branding:
-  icon: "package"
+  icon: "message-circle"
   color: "gray-dark"
 
 inputs:

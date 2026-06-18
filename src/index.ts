@@ -1,6 +1,27 @@
+/* -------------------------------------------------------------------
+
+       🗲 Storm Software - Action Telegram Notify
+
+ This code was released as part of the Action Telegram Notify project. Action Telegram Notify
+ is maintained by Storm Software under the Apache-2.0 license, and is
+ free for commercial and private use. For more information, please visit
+ our licensing page at https://stormsoftware.com/licenses/projects/action-telegram-notify.
+
+ Website:                  https://stormsoftware.com
+ Repository:               https://github.com/storm-software/action-telegram-notify
+ Documentation:            https://docs.stormsoftware.com
+ Contact:                  https://stormsoftware.com/contact
+
+ SPDX-License-Identifier:  Apache-2.0
+
+ ------------------------------------------------------------------- */
+
+/* eslint-disable no-console */
+
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import axios, { AxiosError } from "axios";
+import type { AxiosError } from "axios";
+import axios from "axios";
 import * as Handlebars from "handlebars";
 
 import cancelledTemplate from "./templates/cancelled";
@@ -14,9 +35,9 @@ const REQUIRE_ESCAPE = "_*[]()~`>#+-=|{}.!";
 
 (async () => {
   try {
-    let chat = core.getInput("chat") || process.env.TELEGRAM_CHAT;
-    let token = core.getInput("token") || process.env.TELEGRAM_TOKEN;
-    let status = core.getInput("status");
+    const chat = core.getInput("chat") || process.env.TELEGRAM_CHAT;
+    const token = core.getInput("token") || process.env.TELEGRAM_TOKEN;
+    const status = core.getInput("status");
 
     if (!chat) {
       core.setFailed(
@@ -68,20 +89,25 @@ const REQUIRE_ESCAPE = "_*[]()~`>#+-=|{}.!";
           Object.keys(context)
             .filter(key => key !== "repoUrl")
             .reduce((ret, key) => {
-              if (typeof context[key] === "string") {
-                const len = context[key].length;
+              if (typeof context[key as keyof typeof context] === "string") {
+                const len = (context[key as keyof typeof context] as string)
+                  .length;
 
                 let escaped = "";
                 for (let i = 0; i < len; i++) {
-                  const char = context[key][i];
-                  if (REQUIRE_ESCAPE.indexOf(char) >= 0) {
-                    escaped += "\\" + char;
-                  } else {
-                    escaped += char;
+                  const char = (context[key as keyof typeof context] as string)[
+                    i
+                  ];
+                  if (char) {
+                    if (REQUIRE_ESCAPE.includes(char)) {
+                      escaped += `\\${char}`;
+                    } else {
+                      escaped += char;
+                    }
                   }
                 }
 
-                ret[key] = escaped;
+                (ret as Record<string, any>)[key] = escaped;
               }
 
               return ret;

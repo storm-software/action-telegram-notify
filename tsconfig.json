@@ -1,13 +1,16 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@storm-software/tsconfig/recommended.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "nodenext",
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
+    "types": ["node"],
     "strict": true,
-    "noImplicitAny": false,
+    "noEmit": true,
+    "outDir": "dist",
+    "sourceMap": false,
     "esModuleInterop": true,
-    "sourceMap": true
+    "isolatedModules": true
   },
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
