@@ -38,7 +38,7 @@ export default defineConfig({
   unbundle: false,
   deps: {
     skipNodeModulesBundle: false,
-    alwaysBundle: "*",
+    alwaysBundle: ["@actions/*", "@octokit/core", "axios", "handlebars"],
     onlyBundle: false
   }
 });
