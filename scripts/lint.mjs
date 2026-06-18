@@ -27,28 +27,37 @@ try {
     filesList = argv._.join(" ");
   }
 
-  let proc =
-    $`pnpm exec eslint --fix --quiet --color --no-error-on-unmatched-pattern --config eslint.config.mjs --cache --cache-location ./node_modules/.cache/eslint/workspace.json --concurrency auto ${
+  const eslintProc =
+    $`pnpm exec eslint --fix --quiet --color --no-error-on-unmatched-pattern --config ./eslint.config.mjs --cache --cache-location ./node_modules/.cache/eslint/workspace.json --concurrency auto ${
       filesList || "**/*.{ts,tsx,js,jsx,json,md}"
     }`.timeout(`${30 * 60}s`);
-  proc.stdout.on("data", data => {
+  eslintProc.stdout.on("data", data => {
     echo`${data}`;
   });
-  let result = await proc;
-  if (result.exitCode !== 0) {
-    throw new Error(
-      `An error occurred while running ESLint on the repository: \n\n${result.message}\n`
-    );
-  }
 
-  proc = $`pnpm exec storm-lint actions-up`.timeout(`${30 * 60}s`);
-  proc.stdout.on("data", data => {
+  const actionUpRepoProc = $`pnpm exec storm-lint actions-up`.timeout(
+    `${30 * 60}s`
+  );
+  actionUpRepoProc.stdout.on("data", data => {
     echo`${data}`;
   });
-  result = await proc;
-  if (result.exitCode !== 0) {
+
+  const actionUpYamlProc =
+    $`pnpm exec storm-lint actions-up --actions-up-path action.yml`.timeout(
+      `${30 * 60}s`
+    );
+  actionUpYamlProc.stdout.on("data", data => {
+    echo`${data}`;
+  });
+
+  const results = await Promise.all([
+    eslintProc,
+    actionUpRepoProc,
+    actionUpYamlProc
+  ]);
+  if (results.some(result => result.exitCode !== 0)) {
     throw new Error(
-      `An error occurred while running \`storm-lint\` on the repository: \n\n${result.message}\n`
+      `An error occurred while linting the repository: \n\n${results.map(result => result.message).join("\n")}\n`
     );
   }
 

@@ -1,0 +1,86 @@
+{
+  "name": "action-telegram-notify",
+  "version": "0.0.1",
+  "description": "A GitHub action used by Storm Software repositories to send notifications via Telegram.",
+  "keywords": ["github-action", "telegram", "storm-software"],
+  "homepage": "https://stormsoftware.com",
+  "bugs": "https://github.com/storm-software/action-telegram-notify/issues",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/storm-software/action-telegram-notify.git"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/storm-software"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Storm Software",
+    "email": "contact@stormsoftware.com",
+    "url": "https://stormsoftware.com"
+  },
+  "maintainers": [
+    {
+      "name": "Storm Software",
+      "email": "contact@stormsoftware.com",
+      "url": "https://stormsoftware.com"
+    },
+    {
+      "name": "Pat Sullivan",
+      "email": "admin@stormsoftware.com",
+      "url": "https://patsullivan.org"
+    }
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "bootstrap": "pnpm exec zx scripts/bootstrap.mjs",
+    "build": "pnpm exec zx scripts/build.mjs --prod",
+    "build-dev": "pnpm exec zx scripts/build.mjs --dev",
+    "clean": "pnpm exec zx scripts/clean.mjs",
+    "commit": "pnpm exec storm-git commit",
+    "postinstall": "pnpm bootstrap",
+    "lint": "pnpm exec zx scripts/lint.mjs",
+    "nuke": "pnpm exec zx scripts/nuke.mjs",
+    "push": "git push origin main:main",
+    "update-storm": "pnpm exec zx scripts/update-storm.mjs",
+    "view-config": "pnpm exec storm-config"
+  },
+  "prettier": "@storm-software/prettier/config.json",
+  "dependencies": {
+    "@actions/core": "catalog:",
+    "@actions/exec": "catalog:",
+    "@actions/github": "catalog:",
+    "@octokit/core": "catalog:",
+    "@actions/http-client": "catalog:",
+    "axios": "catalog:",
+    "handlebars": "catalog:",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@storm-software/config": "catalog:",
+    "@storm-software/config-tools": "catalog:",
+    "@storm-software/cspell": "catalog:",
+    "@storm-software/eslint": "catalog:",
+    "@storm-software/eslint-plugin-tsdoc": "catalog:",
+    "@storm-software/git-tools": "catalog:",
+    "@storm-software/linting-tools": "catalog:",
+    "@storm-software/markdownlint": "catalog:",
+    "@storm-software/pnpm-tools": "catalog:",
+    "@storm-software/prettier": "catalog:",
+    "@storm-software/tsconfig": "catalog:",
+    "@types/node": "catalog:",
+    "copyfiles": "catalog:",
+    "eslint": "catalog:",
+    "lefthook": "catalog:",
+    "prettier": "catalog:",
+    "rimraf": "catalog:",
+    "tsdown": "catalog:",
+    "unrs-resolver": "catalog:",
+    "zx": "catalog:"
+  },
+  "triggerEmptyDevReleaseByIncrementingThisNumber": 0
+}
