@@ -20,8 +20,8 @@
 
 import core from "@actions/core";
 import github from "@actions/github";
-import { HttpClient } from "@actions/http-client";
 import handlebars from "handlebars";
+import { request } from "undici";
 import cancelledTemplate from "./templates/cancelled";
 import failedTemplate from "./templates/failed";
 import inprogressTemplate from "./templates/in-progress";
@@ -81,49 +81,54 @@ const REQUIRE_ESCAPE = "_*[]()~`>#+-=|{}.!";
 
       console.log(`Sending message to chat: -100${chat}`);
 
-      // eslint-disable-next-line ts/no-unsafe-call
-      const httpClient = new HttpClient();
-      // eslint-disable-next-line ts/no-unsafe-call
-      const response = await httpClient.post(
+      const response = await request(
         `https://api.telegram.org/bot${token}/sendMessage`,
-        JSON.stringify({
-          chat_id: Number.parseInt(`-100${chat}`),
-          text: template(
-            Object.keys(context)
-              .filter(key => key !== "repoUrl")
-              .reduce((ret, key) => {
-                if (typeof context[key as keyof typeof context] === "string") {
-                  const len = (context[key as keyof typeof context] as string)
-                    .length;
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: Number.parseInt(`-100${chat}`),
+            text: template(
+              Object.keys(context)
+                .filter(key => key !== "repoUrl")
+                .reduce((ret, key) => {
+                  if (
+                    typeof context[key as keyof typeof context] === "string"
+                  ) {
+                    const len = (context[key as keyof typeof context] as string)
+                      .length;
 
-                  let escaped = "";
-                  for (let i = 0; i < len; i++) {
-                    const char = (
-                      context[key as keyof typeof context] as string
-                    )[i];
-                    if (char) {
-                      if (REQUIRE_ESCAPE.includes(char)) {
-                        escaped += `\\${char}`;
-                      } else {
-                        escaped += char;
+                    let escaped = "";
+                    for (let i = 0; i < len; i++) {
+                      const char = (
+                        context[key as keyof typeof context] as string
+                      )[i];
+                      if (char) {
+                        if (REQUIRE_ESCAPE.includes(char)) {
+                          escaped += `\\${char}`;
+                        } else {
+                          escaped += char;
+                        }
                       }
                     }
+
+                    (ret as Record<string, unknown>)[key] = escaped;
                   }
 
-                  (ret as Record<string, any>)[key] = escaped;
-                }
-
-                return ret;
-              }, context)
-          ),
-          parse_mode: "MarkdownV2"
-        })
+                  return ret;
+                }, context)
+            ),
+            parse_mode: "MarkdownV2"
+          })
+        }
       );
-      if (response.message.errored) {
+
+      if (response.statusCode >= 400) {
+        const body = await response.body.text();
         core.setFailed(
-          `An error occured sending message to Telegram channel (${
-            response.message.statusCode
-          }): ${response.message.statusMessage}`
+          `An error occured sending message to Telegram channel (${response.statusCode}): ${body}`
         );
       }
 

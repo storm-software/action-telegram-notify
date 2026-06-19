@@ -15,9 +15,6 @@ catalogs:
     '@actions/github':
       specifier: ^6.0.1
       version: 6.0.1
-    '@actions/http-client':
-      specifier: ^4.0.1
-      version: 4.0.1
     '@octokit/core':
       specifier: ^7.0.6
       version: 7.0.6
@@ -57,9 +54,6 @@ catalogs:
     '@types/node':
       specifier: ^25.9.3
       version: 25.9.3
-    axios:
-      specifier: ^1.18.0
-      version: 1.18.0
     copyfiles:
       specifier: ^2.4.1
       version: 2.4.1
@@ -81,6 +75,9 @@ catalogs:
     tsdown:
       specifier: ^0.22.3
       version: 0.22.3
+    undici:
+      specifier: ^6.27.0
+      version: 6.27.0
     unrs-resolver:
       specifier: ^1.12.2
       version: 1.12.2
@@ -101,9 +98,6 @@ importers:
       '@actions/github':
         specifier: 'catalog:'
         version: 6.0.1
-      '@actions/http-client':
-        specifier: 'catalog:'
-        version: 4.0.1
       '@octokit/core':
         specifier: 'catalog:'
         version: 7.0.6
@@ -143,9 +137,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.3
-      axios:
-        specifier: 'catalog:'
-        version: 1.18.0
       copyfiles:
         specifier: 'catalog:'
         version: 2.4.1
@@ -170,6 +161,9 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
+      undici:
+        specifier: 'catalog:'
+        version: 6.27.0
       unrs-resolver:
         specifier: 'catalog:'
         version: 1.12.2
@@ -193,9 +187,6 @@ packages:
 
   '@actions/http-client@3.0.2':
     resolution: {integrity: sha512-JP38FYYpyqvUsz+Igqlc/JG6YO9PaKuvqjM3iGvaLqFnJ7TFmcLyy2IDrY0bI0qCQug8E9K+elv5ZNfw62ZJzA==}
-
-  '@actions/http-client@4.0.1':
-    resolution: {integrity: sha512-+Nvd1ImaOZBSoPbsUtEhv+1z99H12xzncCkz0a3RuehINE81FZSe2QTj3uvAPTcJX/SCzUQHQ0D1GrPMbrPitg==}
 
   '@actions/io@2.0.0':
     resolution: {integrity: sha512-Jv33IN09XLO+0HS79aaODsvIRyduiF7NY/F6LYeK5oeUmrsz7aFdRphQjFoESF4jS7lMauDOttKALcpapVDIAg==}
@@ -2048,10 +2039,6 @@ packages:
     resolution: {integrity: sha512-XNAb/a6TCqou+TufU8/u11HCu9x1gYvOoxLwtlXgIqmkrYQADVv6ljyW2zwiPhHz9R1gItAWpuDrdJMmrOBFEA==}
     engines: {node: '>= 16.0.0'}
 
-  agent-base@6.0.2:
-    resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
-    engines: {node: '>= 6.0.0'}
-
   ajv@6.15.0:
     resolution: {integrity: sha512-fgFx7Hfoq60ytK2c7DhnF8jIvzYgOMxfugjLOSMHjLIPgenqa7S7oaagATUq99mV6IYvN2tRmC0wnTYX6iPbMw==}
 
@@ -2144,9 +2131,6 @@ packages:
 
   axios@1.16.0:
     resolution: {integrity: sha512-6hp5CwvTPlN2A31g5dxnwAX0orzM7pmCRDLnZSX772mv8WDqICwFjowHuPs04Mc8deIld1+ejhtaMn5vp6b+1w==}
-
-  axios@1.18.0:
-    resolution: {integrity: sha512-E32NzpYKp++W7XRe52rHiXV2ehxmh3wbdgO7MHeFM+vqxLBYHzt0ElkiImtOBxtOmyp0yoC8C6uESVV84Y2/hw==}
 
   axios@1.8.2:
     resolution: {integrity: sha512-ls4GYBm5aig9vWx8AWDSGLpnpDQRtWAfrjU+EuytuODrFBkqesN2RkOQCBzrA1RQNHw1SmRMSDDDSwzNAYQ6Rg==}
@@ -3252,10 +3236,6 @@ packages:
 
   htmlparser2@10.0.0:
     resolution: {integrity: sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==}
-
-  https-proxy-agent@5.0.1:
-    resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
-    engines: {node: '>= 6'}
 
   iconv-lite@0.7.2:
     resolution: {integrity: sha512-im9DjEDQ55s9fL4EYzOAv0yMqmMBSZp6G0VvFyTMPKWxiSBHUj9NW/qqLmXUwXrrM7AvqSlTCfvqRb0cM8yYqw==}
@@ -5055,11 +5035,6 @@ snapshots:
       undici: 5.29.0
 
   '@actions/http-client@3.0.2':
-    dependencies:
-      tunnel: 0.0.6
-      undici: 6.27.0
-
-  '@actions/http-client@4.0.1':
     dependencies:
       tunnel: 0.0.6
       undici: 6.27.0
@@ -7222,12 +7197,6 @@ snapshots:
 
   address@2.0.3: {}
 
-  agent-base@6.0.2:
-    dependencies:
-      debug: 4.4.3
-    transitivePeerDependencies:
-      - supports-color
-
   ajv@6.15.0:
     dependencies:
       fast-deep-equal: 3.1.3
@@ -7341,16 +7310,6 @@ snapshots:
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
-
-  axios@1.18.0:
-    dependencies:
-      follow-redirects: 1.16.0
-      form-data: 4.0.6
-      https-proxy-agent: 5.0.1
-      proxy-from-env: 2.1.0
-    transitivePeerDependencies:
-      - debug
-      - supports-color
 
   axios@1.8.2:
     dependencies:
@@ -8622,13 +8581,6 @@ snapshots:
       domhandler: 5.0.3
       domutils: 3.2.2
       entities: 6.0.1
-
-  https-proxy-agent@5.0.1:
-    dependencies:
-      agent-base: 6.0.2
-      debug: 4.4.3
-    transitivePeerDependencies:
-      - supports-color
 
   iconv-lite@0.7.2:
     dependencies:

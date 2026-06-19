@@ -54,7 +54,6 @@
     "@actions/core": "catalog:",
     "@actions/exec": "catalog:",
     "@actions/github": "catalog:",
-    "@actions/http-client": "catalog:",
     "@octokit/core": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
@@ -68,7 +67,6 @@
     "@storm-software/prettier": "catalog:",
     "@storm-software/tsconfig": "catalog:",
     "@types/node": "catalog:",
-    "axios": "catalog:",
     "copyfiles": "catalog:",
     "eslint": "catalog:",
     "handlebars": "catalog:",
@@ -77,6 +75,7 @@
     "rimraf": "catalog:",
     "tsdown": "catalog:",
     "typescript": "^6.0.3",
+    "undici": "catalog:",
     "unrs-resolver": "catalog:",
     "zx": "catalog:"
   },
