@@ -54,6 +54,7 @@
     "@actions/core": "catalog:",
     "@actions/exec": "catalog:",
     "@actions/github": "catalog:",
+    "@actions/http-client": "catalog:",
     "@octokit/core": "catalog:",
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",

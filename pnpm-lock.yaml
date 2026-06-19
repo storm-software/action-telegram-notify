@@ -15,6 +15,9 @@ catalogs:
     '@actions/github':
       specifier: ^6.0.1
       version: 6.0.1
+    '@actions/http-client':
+      specifier: ^4.0.1
+      version: 4.0.1
     '@octokit/core':
       specifier: ^7.0.6
       version: 7.0.6
@@ -98,6 +101,9 @@ importers:
       '@actions/github':
         specifier: 'catalog:'
         version: 6.0.1
+      '@actions/http-client':
+        specifier: 'catalog:'
+        version: 4.0.1
       '@octokit/core':
         specifier: 'catalog:'
         version: 7.0.6
@@ -187,6 +193,9 @@ packages:
 
   '@actions/http-client@3.0.2':
     resolution: {integrity: sha512-JP38FYYpyqvUsz+Igqlc/JG6YO9PaKuvqjM3iGvaLqFnJ7TFmcLyy2IDrY0bI0qCQug8E9K+elv5ZNfw62ZJzA==}
+
+  '@actions/http-client@4.0.1':
+    resolution: {integrity: sha512-+Nvd1ImaOZBSoPbsUtEhv+1z99H12xzncCkz0a3RuehINE81FZSe2QTj3uvAPTcJX/SCzUQHQ0D1GrPMbrPitg==}
 
   '@actions/io@2.0.0':
     resolution: {integrity: sha512-Jv33IN09XLO+0HS79aaODsvIRyduiF7NY/F6LYeK5oeUmrsz7aFdRphQjFoESF4jS7lMauDOttKALcpapVDIAg==}
@@ -5046,6 +5055,11 @@ snapshots:
       undici: 5.29.0
 
   '@actions/http-client@3.0.2':
+    dependencies:
+      tunnel: 0.0.6
+      undici: 6.27.0
+
+  '@actions/http-client@4.0.1':
     dependencies:
       tunnel: 0.0.6
       undici: 6.27.0

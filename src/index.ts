@@ -20,8 +20,7 @@
 
 import core from "@actions/core";
 import github from "@actions/github";
-import type { AxiosError } from "axios";
-import axios from "axios";
+import { HttpClient } from "@actions/http-client";
 import handlebars from "handlebars";
 import cancelledTemplate from "./templates/cancelled";
 import failedTemplate from "./templates/failed";
@@ -82,48 +81,58 @@ const REQUIRE_ESCAPE = "_*[]()~`>#+-=|{}.!";
 
       console.log(`Sending message to chat: -100${chat}`);
 
-      await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
-        chat_id: Number.parseInt(`-100${chat}`),
-        text: template(
-          Object.keys(context)
-            .filter(key => key !== "repoUrl")
-            .reduce((ret, key) => {
-              if (typeof context[key as keyof typeof context] === "string") {
-                const len = (context[key as keyof typeof context] as string)
-                  .length;
+      // eslint-disable-next-line ts/no-unsafe-call
+      const httpClient = new HttpClient();
+      // eslint-disable-next-line ts/no-unsafe-call
+      const response = await httpClient.post(
+        `https://api.telegram.org/bot${token}/sendMessage`,
+        JSON.stringify({
+          chat_id: Number.parseInt(`-100${chat}`),
+          text: template(
+            Object.keys(context)
+              .filter(key => key !== "repoUrl")
+              .reduce((ret, key) => {
+                if (typeof context[key as keyof typeof context] === "string") {
+                  const len = (context[key as keyof typeof context] as string)
+                    .length;
 
-                let escaped = "";
-                for (let i = 0; i < len; i++) {
-                  const char = (context[key as keyof typeof context] as string)[
-                    i
-                  ];
-                  if (char) {
-                    if (REQUIRE_ESCAPE.includes(char)) {
-                      escaped += `\\${char}`;
-                    } else {
-                      escaped += char;
+                  let escaped = "";
+                  for (let i = 0; i < len; i++) {
+                    const char = (
+                      context[key as keyof typeof context] as string
+                    )[i];
+                    if (char) {
+                      if (REQUIRE_ESCAPE.includes(char)) {
+                        escaped += `\\${char}`;
+                      } else {
+                        escaped += char;
+                      }
                     }
                   }
+
+                  (ret as Record<string, any>)[key] = escaped;
                 }
 
-                (ret as Record<string, any>)[key] = escaped;
-              }
-
-              return ret;
-            }, context)
-        ),
-        parse_mode: "MarkdownV2"
-      });
+                return ret;
+              }, context)
+          ),
+          parse_mode: "MarkdownV2"
+        })
+      );
+      if (response.message.errored) {
+        core.setFailed(
+          `An error occured sending message to Telegram channel (${
+            response.message.statusCode
+          }): ${response.message.statusMessage}`
+        );
+      }
 
       console.log("Successfully sent Telegram message");
     } catch (error) {
       console.log("Telegrams error:", error);
       core.setFailed(
-        `Telegram FAILED: ${(error as AxiosError)?.message ?? "No Error Message"} \n\nException: ${JSON.stringify(
-          (error as AxiosError)?.isAxiosError &&
-            typeof (error as AxiosError).toJSON === "function"
-            ? (error as AxiosError).toJSON()
-            : error
+        `Telegram FAILED: ${(error as Error)?.message ?? "No Error Message"} \n\nException: ${JSON.stringify(
+          error
         )}`
       );
       process.exit(1);
