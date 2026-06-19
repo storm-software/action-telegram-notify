@@ -50,17 +50,11 @@
     "view-config": "pnpm exec storm-config"
   },
   "prettier": "@storm-software/prettier/config.json",
-  "dependencies": {
+  "devDependencies": {
     "@actions/core": "catalog:",
     "@actions/exec": "catalog:",
     "@actions/github": "catalog:",
     "@octokit/core": "catalog:",
-    "@actions/http-client": "catalog:",
-    "axios": "catalog:",
-    "handlebars": "catalog:",
-    "typescript": "^6.0.3"
-  },
-  "devDependencies": {
     "@storm-software/config": "catalog:",
     "@storm-software/config-tools": "catalog:",
     "@storm-software/cspell": "catalog:",
@@ -73,12 +67,15 @@
     "@storm-software/prettier": "catalog:",
     "@storm-software/tsconfig": "catalog:",
     "@types/node": "catalog:",
+    "axios": "catalog:",
     "copyfiles": "catalog:",
     "eslint": "catalog:",
+    "handlebars": "catalog:",
     "lefthook": "catalog:",
     "prettier": "catalog:",
     "rimraf": "catalog:",
     "tsdown": "catalog:",
+    "typescript": "^6.0.3",
     "unrs-resolver": "catalog:",
     "zx": "catalog:"
   },

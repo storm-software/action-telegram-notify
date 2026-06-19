@@ -15,9 +15,6 @@ catalogs:
     '@actions/github':
       specifier: ^6.0.1
       version: 6.0.1
-    '@actions/http-client':
-      specifier: ^3.0.2
-      version: 3.0.2
     '@octokit/core':
       specifier: ^7.0.6
       version: 7.0.6
@@ -91,7 +88,7 @@ catalogs:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@actions/core':
         specifier: 'catalog:'
         version: 2.0.3
@@ -101,22 +98,9 @@ importers:
       '@actions/github':
         specifier: 'catalog:'
         version: 6.0.1
-      '@actions/http-client':
-        specifier: 'catalog:'
-        version: 3.0.2
       '@octokit/core':
         specifier: 'catalog:'
         version: 7.0.6
-      axios:
-        specifier: 'catalog:'
-        version: 1.18.0
-      handlebars:
-        specifier: 'catalog:'
-        version: 4.7.9
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-    devDependencies:
       '@storm-software/config':
         specifier: 'catalog:'
         version: 1.138.10(zod@4.4.3)
@@ -153,12 +137,18 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.3
+      axios:
+        specifier: 'catalog:'
+        version: 1.18.0
       copyfiles:
         specifier: 'catalog:'
         version: 2.4.1
       eslint:
         specifier: 'catalog:'
         version: 10.5.0(jiti@2.7.0)
+      handlebars:
+        specifier: 'catalog:'
+        version: 4.7.9
       lefthook:
         specifier: 'catalog:'
         version: 1.13.6
@@ -171,6 +161,9 @@ importers:
       tsdown:
         specifier: 'catalog:'
         version: 0.22.3(typescript@6.0.3)
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
       unrs-resolver:
         specifier: 'catalog:'
         version: 1.12.2

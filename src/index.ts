@@ -18,12 +18,11 @@
 
 /* eslint-disable no-console */
 
-import * as core from "@actions/core";
-import * as github from "@actions/github";
+import core from "@actions/core";
+import github from "@actions/github";
 import type { AxiosError } from "axios";
 import axios from "axios";
-import * as Handlebars from "handlebars";
-
+import handlebars from "handlebars";
 import cancelledTemplate from "./templates/cancelled";
 import failedTemplate from "./templates/failed";
 import inprogressTemplate from "./templates/in-progress";
@@ -64,20 +63,20 @@ const REQUIRE_ESCAPE = "_*[]()~`>#+-=|{}.!";
         timestamp: new Date().toISOString()
       };
 
-      let template!: HandlebarsTemplateDelegate<typeof context>;
+      let template!: handlebars.TemplateDelegate<typeof context>;
       switch (status?.toLowerCase()?.trim?.()?.replace(/\s+/g, "-")) {
         case "success":
-          template = Handlebars.compile<typeof context>(successTemplate);
+          template = handlebars.compile<typeof context>(successTemplate);
           break;
         case "failed":
         case "failure":
-          template = Handlebars.compile<typeof context>(failedTemplate);
+          template = handlebars.compile<typeof context>(failedTemplate);
           break;
         case "cancelled":
-          template = Handlebars.compile<typeof context>(cancelledTemplate);
+          template = handlebars.compile<typeof context>(cancelledTemplate);
           break;
         default:
-          template = Handlebars.compile<typeof context>(inprogressTemplate);
+          template = handlebars.compile<typeof context>(inprogressTemplate);
           break;
       }
 
