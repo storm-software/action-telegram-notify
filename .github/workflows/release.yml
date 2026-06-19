@@ -112,8 +112,8 @@ jobs:
           release_name: Release ${{ steps.tag.outputs.value }}
           body: Release ${{ steps.tag.outputs.value }} of the Storm Software - Telegram Channel Notification action.
           make_latest: true
-          draft: false
-          prerelease: false
+          owner: storm-software
+          repo: action-telegram-notify
 
       - name: Upload release artifact
         if: "steps.tag.outputs.value != ''"
