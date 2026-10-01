@@ -39,3 +39,5 @@ minimumReleaseAge: 800
 minimumReleaseAgeExclude:
   - "@storm-software/*"
   - conventional-changelog-storm-software
+  # Renovate security update: undici@6.28.0
+  - undici@6.28.0
