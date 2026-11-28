@@ -6,28 +6,28 @@ catalog:
   "@actions/core": ^2.0.3
   "@actions/exec": ^2.0.0
   "@actions/github": ^6.0.1
-  "@octokit/core": ^7.0.6
-  "@storm-software/config": ^1.138.10
-  "@storm-software/config-tools": ^1.190.73
-  "@storm-software/cspell": ^0.46.141
-  "@storm-software/eslint": ^0.170.106
-  "@storm-software/eslint-plugin-tsdoc": ^0.0.36
-  "@storm-software/git-tools": ^2.131.81
-  "@storm-software/linting-tools": ^1.134.3
-  "@storm-software/markdownlint": ^0.30.229
-  "@storm-software/pnpm-tools": ^0.7.84
-  "@storm-software/prettier": ^0.59.126
-  "@storm-software/tsconfig": ^0.48.140
-  "@types/node": ^25.9.3
+  "@octokit/core": ^7.0.8
+  "@storm-software/config": ^1.138.95
+  "@storm-software/config-tools": ^1.190.159
+  "@storm-software/cspell": ^0.46.226
+  "@storm-software/eslint": ^0.170.195
+  "@storm-software/eslint-plugin-tsdoc": ^0.0.122
+  "@storm-software/git-tools": ^2.133.5
+  "@storm-software/linting-tools": ^1.134.90
+  "@storm-software/markdownlint": ^0.30.314
+  "@storm-software/pnpm-tools": ^0.7.173
+  "@storm-software/prettier": ^0.59.212
+  "@storm-software/tsconfig": ^0.48.225
+  "@types/node": ^25.9.12
   handlebars: ^4.7.9
-  tsdown: ^0.22.3
+  tsdown: ^0.23.7
   undici: ^6.27.0
-  unrs-resolver: ^1.12.2
+  unrs-resolver: ^1.13.0
   zx: ^8.8.5
-  prettier: ^3.8.4
-  rimraf: ^6.1.3
+  prettier: ^3.10.1
+  rimraf: ^6.1.4
   lefthook: ^1.13.6
-  eslint: ^10.5.0
+  eslint: ^10.16.0
   copyfiles: ^2.4.1
 shamefullyHoist: true
 engineStrict: true
